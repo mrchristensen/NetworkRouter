@@ -25,14 +25,15 @@ class NetworkRoutingSolver:
         total_length = 0
         node = self.network.nodes[self.dest]
 
-        while node is not None:  # Traverse the graph backwards
-            if self.results[node.node_id]["prev"] is None:
-                path_edges = []
-                total_length = math.inf
-                break
-
+        while self.results[node.node_id]["prev"] is not None:  # Traverse the graph backwards
             previous_node = self.network.nodes[self.results[node.node_id]['prev']]
 
+            # if self.results[node.node_id]["prev"] is None:
+            #     path_edges = []
+            #     total_length = math.inf
+            #     break
+            #
+            #
             for neighbor in previous_node.neighbors:
                 if neighbor.dest is node:
                     total_length = total_length + neighbor.length
@@ -42,12 +43,10 @@ class NetworkRoutingSolver:
 
         return {'cost': total_length, 'path':path_edges}
 
-    def computeShortestPaths( self, srcIndex, use_heap=False ):
+    def computeShortestPaths( self, srcIndex, use_heap=False):
         t1 = time.time()
 
-
-        queue = None
-        if(use_heap):
+        if use_heap:
             queue = HeapPriorityQueue(self.network)
         else:
             queue = UnsortedArrayPriorityQueue(self.network)
@@ -59,7 +58,7 @@ class NetworkRoutingSolver:
         #       CALL TO getShortestPath(dest_index)
 
         for node in self.network.nodes:
-            self.results[node.node_id] = {'dist': math.inf, 'prev': -1}
+            self.results[node.node_id] = {'dist': math.inf, 'prev': None}
 
         self.results[srcIndex]['dist'] = 0
 
