@@ -234,6 +234,11 @@ class Proj3GUI( QMainWindow ):
 			self.checkGenInputs()
 			self.checkPathInputs()
 
+			#ease of testing stuff:
+			self.sourceNode.setText('312')
+			self.targetNode.setText('1')
+			self.checkPathInputs()
+
 	def display_paths( self, heap_path, heap_time, array_path, array_time ):
 		self.view.clearEdges()
 		if heap_path:
@@ -407,7 +412,7 @@ class Proj3GUI( QMainWindow ):
 		self.speedup.setFixedWidth(200)
 		self.speedup.setEnabled(False)
 		self.randSeed		= QLineEdit('0')
-		self.size			= QLineEdit('7')
+		self.size			= QLineEdit('2000')
 		self.sourceNode		= QLineEdit('')
 		self.targetNode		= QLineEdit('')
 		self.totalCost		= QLineEdit('0.0')
